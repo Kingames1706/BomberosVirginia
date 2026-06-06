@@ -1,0 +1,612 @@
+/* ========================================================================== */
+/* --- VARIABLES DE COLOR (Esquema Oscuro, Transparencias y Tonos Suaves) --- */
+/* ========================================================================== */
+:root {
+    --rojo-principal: #502b2b;   /* Rojo Bombero de tu footer (Identidad) */
+    --rojo-oscuro: #a33c22;      /* Variante profunda para transiciones */
+    --rojo-alerta: #ff4d4d;      /* Rojo vivo para el recuadro de emergencia */
+    --blanco-puro: #FFFFFF;      /* Blanco para legibilidad y pureza */
+    --gris-fondo: #1A1A1A;       /* El negro de tu footer usado como fondo base suave */
+    --gris-suave: #2A2A2A;       /* Tono intermedio para contenedores */
+    --amarillo-accion: #a38016;  /* Amarillo institucional */
+    --amarillo-hover: #FFA000;
+    --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    /* Efectos Avanzados de Cristal y Sombras */
+    --bg-transparente-oscuro: rgba(26, 26, 26, 0.75);
+    --blur-efecto: blur(12px);
+    --sombra-suave: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --sombra-resaltada: 0 15px 35px rgba(0, 0, 0, 0.6), 0 12px 40px rgba(255, 77, 77, 0.15);
+}
+
+/* --- ESTILOS GENERALES Y ANIMACIÓN DE ENTRADA --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+html, body {
+    position: static;
+    min-height: 100vh;
+    font-family: var(--fuente-principal);
+    background-color: #121212; /* Fondo general ultra oscuro para descanso visual */
+    color: var(--blanco-puro); /* Texto en blanco para legibilidad AAA */
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+body {
+    animation: fadeInPage 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* ========================================================================== */
+/* --- ELEMENTOS FLOTANTES (CORREGIDOS PARA SEGUIR EL SCROLL FIJOS) -------- */
+/* ========================================================================== */
+
+/* MENÚ FLOTANTE DE REDES SOCIALES (DERECHA) */
+.social-floating-menu {
+    position: fixed !important; /* Fuerza a que se quede estático en la pantalla */
+    bottom: 30px !important;
+    right: 30px !important;
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    align-items: center !important;
+    gap: 15px !important;
+    z-index: 99999 !important; /* Capa suprema por encima del footer y del blur */
+
+    /* Despega el elemento del flujo base para que la GPU lo mueva sin trabas */
+    transform: translate3d(0, 0, 0) !important;
+    will-change: transform;
+}
+
+.main-planet-btn {
+    width: 62px;
+    height: 62px;
+    background: rgba(80, 43, 43, 0.85);
+    backdrop-filter: var(--blur-efecto);
+    -webkit-backdrop-filter: var(--blur-efecto);
+    color: var(--blanco-puro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: var(--sombra-suave);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.sub-social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(25px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-icon-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco-puro);
+    font-size: 1.4rem;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+}
+
+.social-icon-btn:hover {
+    transform: scale(1.15) translateY(-2px);
+    filter: brightness(1.15);
+}
+
+.whatsapp { background-color: rgba(37, 211, 102, 0.85); backdrop-filter: var(--blur-efecto); }
+.facebook { background-color: rgba(24, 119, 242, 0.85); backdrop-filter: var(--blur-efecto); }
+.instagram { background-color: rgba(225, 48, 108, 0.85); backdrop-filter: var(--blur-efecto); }
+
+.social-floating-menu:hover .sub-social-buttons {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.social-floating-menu:hover .main-planet-btn {
+    background: var(--gris-suave);
+    transform: rotate(45deg) scale(1.05);
+}
+
+/* LOGO ESTÁTICO FLOTANTE (IZQUIERDA) */
+.static-logo-left {
+    position: fixed !important; /* Fuerza a que te siga en el scroll */
+    bottom: 30px !important;
+    left: 30px !important;
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: var(--blur-efecto);
+    -webkit-backdrop-filter: var(--blur-efecto);
+    box-shadow: var(--sombra-suave) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 99999 !important; /* Misma prioridad alta */
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+
+    transform: translate3d(0, 0, 0) !important;
+    will-change: transform;
+    transition: transform 0.3s ease;
+}
+
+.static-logo-left:hover {
+    transform: scale(1.08) rotate(3deg) !important;
+}
+
+.static-logo-left img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+
+/* --- CABECERA CON TRANSPARENCIA (Glassmorphism) --- */
+header {
+    background: rgba(83, 8, 8, 0.75); /* Rojo de tu footer con transparencia suave */
+    backdrop-filter: var(--blur-efecto);
+    -webkit-backdrop-filter: var(--blur-efecto);
+    color: var(--blanco-puro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-container i {
+    font-size: 1.8rem;
+    color: var(--amarillo-accion);
+    text-shadow: 0 0 10px rgba(163, 128, 22, 0.5);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-container:hover i {
+    transform: scale(1.2) rotate(-15deg);
+    color: var(--amarillo-hover);
+}
+
+.logo-container h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Botón Hamburguesa */
+.menu-hamburger {
+    background: none;
+    border: none;
+    color: var(--blanco-puro);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    z-index: 1100;
+}
+
+.menu-hamburger:hover {
+    color: var(--amarillo-hover);
+    transform: scale(1.1);
+}
+
+/* MENÚ DESPLEGABLE LATERAL */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: var(--blur-efecto);
+    -webkit-backdrop-filter: var(--blur-efecto);
+    display: flex;
+    flex-direction: column;
+    padding-top: 90px;
+    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1050;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    border-left: 3px solid var(--rojo-principal);
+}
+
+.nav-menu.active {
+    right: 0;
+}
+
+.nav-menu a {
+    color: var(--blanco-puro);
+    text-decoration: none;
+    padding: 22px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background: rgba(80, 43, 43, 0.5);
+    padding-left: 40px;
+    color: var(--amarillo-hover);
+}
+
+/* Overlay con desenfoque de fondo */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    z-index: 1040;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+/* --- SECCIÓN HERO --- */
+.hero-section {
+    display: flex;
+    min-height: 75vh;
+    align-items: center;
+    background-color: var(--gris-fondo);
+}
+
+.hero-slider-container {
+    width: 50%;
+    height: 75vh;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.slider-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    object-fit: contain;
+    background-color: #0d0d0d;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.hero-text {
+    width: 50%;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-text h2 {
+    font-size: 2.6rem;
+    color: var(--blanco-puro);
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: #b3b3b3;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+/* --- SEPARADORES DE SECCIÓN --- */
+.section-divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+    margin: 40px 10%;
+    border: none;
+}
+
+/* --- SECCIÓN DE DONACIONES --- */
+.donation-section {
+    background: rgba(42, 42, 42, 0.4);
+    backdrop-filter: var(--blur-efecto);
+    -webkit-backdrop-filter: var(--blur-efecto);
+    padding: 60px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    border-radius: 24px;
+    margin: 0 5%;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.donation-section:hover {
+    transform: scale(1.01);
+}
+
+.donation-left h3 {
+    font-size: 2.2rem;
+    color: var(--blanco-puro);
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.donation-left p {
+    font-size: 1.15rem;
+    color: #cccccc;
+}
+
+/* --- BOTÓN DE DONACIONES --- */
+.btn-donation {
+    position: relative;
+    background: linear-gradient(135deg, var(--rojo-principal) 0%, #3a1e1e 100%);
+    color: var(--blanco-puro);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 18px 45px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease, border-color 0.6s ease;
+}
+
+.btn-donation:hover {
+    transform: translateY(-4px);
+    border-color: rgba(163, 128, 22, 0.6);
+    box-shadow: 0 0 20px rgba(163, 128, 22, 0.4), 0 0 40px rgba(80, 43, 43, 0.6), 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.btn-donation:active {
+    transform: translateY(1px);
+    background: #151515;
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.8), 0 2px 5px rgba(0,0,0,0.5);
+    transition: all 0.1s ease;
+}
+
+.smoke-particle {
+    position: absolute;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(200,200,200,0.4) 0%, rgba(150,150,150,0.1) 50%, transparent 70%);
+    border-radius: 50%;
+    z-index: 999;
+    animation: smokeRise 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes smokeRise {
+    0% { transform: translate(0, 0) scale(0.3); opacity: 0.8; filter: blur(2px); }
+    50% { opacity: 0.4; filter: blur(6px); }
+    100% { transform: translate(var(--x-drift), -80px) scale(2.5); opacity: 0; filter: blur(12px); }
+}
+
+/* --- SECCIÓN INFERIOR INFO --- */
+.info-section {
+    display: flex;
+    min-height: 60vh;
+    align-items: center;
+    background-color: var(--gris-fondo);
+}
+
+.info-text {
+    width: 50%;
+    padding: 60px;
+}
+
+.info-text h3 {
+    font-size: 2.2rem;
+    color: var(--blanco-puro);
+    margin-bottom: 20px;
+    font-weight: 800;
+    border-left: 6px solid var(--rojo-principal);
+    padding-left: 18px;
+}
+
+.info-text p {
+    font-size: 1.1rem;
+    color: #b3b3b3;
+    text-align: justify;
+}
+
+.info-slider-container {
+    width: 50%;
+    height: 60vh;
+    padding: 40px;
+}
+
+/* --- RESPONSIVIDAD GENERAL --- */
+@media (max-width: 768px) {
+    .hero-section, .info-section { flex-direction: column; padding: 20px 0; }
+    .donation-section { flex-direction: column; padding: 40px 25px; text-align: center; margin: 0 20px; }
+    .hero-slider-container, .hero-text, .info-text, .info-slider-container { width: 100%; padding: 30px 20px; height: 45vh; }
+    .hero-text, .info-text { height: auto; }
+    .hero-text h2, .info-text h3 { font-size: 2rem; }
+    .btn-donation { width: 100%; text-align: center; }
+    .static-logo-left, .social-floating-menu { bottom: 20px !important; }
+    .static-logo-left { left: 20px !important; width: 60px !important; height: 60px !important; }
+    .social-floating-menu { right: 20px !important; }
+}
+
+/* ========================================================================== */
+/* --- EL FOOTER CONSERVA SU PROTAGONISMO ABSOLUTO (Máximo Resaltado) --- */
+/* ========================================================================== */
+.main-footer {
+    background-color: #1A1A1A;
+    color: var(--blanco-puro);
+    padding: 60px 5% 30px 5%;
+    margin-top: 60px;
+    border-top: 5px solid var(--rojo-principal);
+    position: relative;
+    box-shadow: var(--sombra-resaltada);
+    z-index: 10;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.emergency-box {
+    background: linear-gradient(135deg, #2d1818 0%, #111111 100%);
+    padding: 25px;
+    border-radius: 16px;
+    border-left: 5px solid var(--rojo-alerta);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.emergency-box h3 {
+    font-size: 1.25rem;
+    color: var(--blanco-puro);
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.emergency-phone {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--rojo-alerta);
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.emergency-phone:hover {
+    color: var(--amarillo-hover);
+    transform: scale(1.03);
+    text-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+}
+
+.footer-motto {
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--amarillo-accion);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+.footer-right {
+    flex: 0.8;
+    width: 100%;
+}
+
+.map-wrapper {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    border: 2px solid #2d2d2d;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.map-wrapper:hover {
+    transform: translateY(-5px);
+    border-color: var(--rojo-principal);
+}
+
+.map-wrapper iframe {
+    display: block;
+    filter: grayscale(5%) contrast(105%);
+}
+
+.credits {
+    margin-top: 40px;
+    border-top: 1px solid #2d2d2d;
+    padding-top: 15px;
+    width: 100%;
+}
+
+.credits p {
+    font-size: 0.8rem;
+    color: #777;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+@media (max-width: 900px) {
+    .footer-container { flex-direction: column; text-align: center; gap: 40px; }
+    .footer-left { align-items: center; width: 100%; }
+    .emergency-box { width: 100%; border-left: none; border-bottom: 5px solid var(--rojo-alerta); }
+    .emergency-phone { font-size: 2.1rem; }
+    .footer-right { width: 100%; }
+    .map-wrapper iframe { height: 200px; }
+    .credits { text-align: center; }
+}

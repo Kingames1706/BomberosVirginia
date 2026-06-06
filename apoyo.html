@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apoya al Cuerpo de Bomberos Voluntarios de La Virginia con donaciones, coordinación por WhatsApp y aportes en especie.">
+    <title>Apoyo - Bomberos de La Virginia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --support-title-font: 'Bebas Neue', sans-serif;
+            --support-body-font: 'DM Sans', var(--fuente-principal);
+            --support-mono-font: 'DM Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body.support-page {
+            position: relative;
+            background:
+                radial-gradient(circle at top, rgba(80, 43, 43, 0.36), transparent 34%),
+                linear-gradient(180deg, #121212 0%, #0e0e0e 56%, #111111 100%);
+            color: var(--blanco-puro);
+            font-family: var(--support-body-font);
+        }
+
+        body.support-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.05) 0, rgba(255, 255, 255, 0) 26%),
+                radial-gradient(circle at 85% 8%, rgba(255, 77, 77, 0.10) 0, rgba(255, 77, 77, 0) 30%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: auto, auto, 30px 30px, 30px 30px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.45;
+        }
+
+        .support-main {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 10px;
+        }
+
+        .support-hero,
+        .support-section,
+        .support-quote {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .support-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+            gap: 20px;
+            align-items: stretch;
+            padding-top: 48px;
+        }
+
+        .support-copy {
+            padding: 18px 0 10px;
+        }
+
+        .support-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(212, 168, 83, 0.28);
+            background: rgba(212, 168, 83, 0.08);
+            color: var(--oro-light);
+            font-family: var(--support-mono-font);
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .support-title {
+            font-family: var(--support-title-font);
+            font-size: clamp(3.6rem, 8vw, 6.3rem);
+            line-height: 0.9;
+            letter-spacing: 0.03em;
+            margin: 0 0 16px;
+        }
+
+        .support-title span {
+            color: var(--rojo-alerta);
+            display: block;
+        }
+
+        .support-lead {
+            max-width: 62ch;
+            color: #c9c9c9;
+            font-size: 1.03rem;
+            line-height: 1.75;
+        }
+
+        .support-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 26px 0 18px;
+        }
+
+        .support-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .support-btn:focus-visible,
+        .amount-btn:focus-visible,
+        .custom-amount input:focus-visible {
+            outline: 2px solid rgba(255, 77, 77, 0.5);
+            outline-offset: 2px;
+        }
+
+        .support-btn.primary {
+            background: linear-gradient(135deg, var(--rojo-principal), #341818);
+            color: var(--blanco-puro);
+            box-shadow: 0 12px 28px rgba(80, 43, 43, 0.34);
+        }
+
+        .support-btn.secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: var(--blanco-puro);
+        }
+
+        .support-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .support-tag {
+            padding: 7px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #d5d5d5;
+            font-size: 0.82rem;
+        }
+
+        .support-panel,
+        .support-card,
+        .contact-card,
+        .quote-panel {
+            background: rgba(22, 22, 22, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.32);
+            backdrop-filter: blur(14px);
+        }
+
+        .support-panel {
+            padding: 24px;
+        }
+
+        .support-panel-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .support-panel-head h3,
+        .support-card h4,
+        .donation-card h3 {
+            font-family: var(--support-title-font);
+            letter-spacing: 0.03em;
+            line-height: 0.95;
+        }
+
+        .support-panel-head h3 {
+            font-size: 2.35rem;
+        }
+
+        .support-panel-head p {
+            max-width: 24ch;
+            color: #a8a8a8;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            text-align: right;
+        }
+
+        .support-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .support-list-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .support-list-item i {
+            margin-top: 3px;
+            color: var(--oro-light);
+            font-size: 1.02rem;
+            flex-shrink: 0;
+        }
+
+        .support-list-item strong,
+        .contact-item strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--blanco-puro);
+        }
+
+        .support-list-item span,
+        .contact-item span,
+        .step-item span,
+        .support-panel-note,
+        .donation-hint {
+            color: #b5b5b5;
+            line-height: 1.6;
+        }
+
+        .support-panel-note {
+            margin-top: 12px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
+        }
+
+        .support-section {
+            padding-top: 54px;
+        }
+
+        .support-quote {
+            padding-top: 54px;
+        }
+
+        .section-heading {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-eyebrow {
+            font-family: var(--support-mono-font);
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--oro-light);
+        }
+
+        .section-heading h2 {
+            font-family: var(--support-title-font);
+            font-size: clamp(2.35rem, 4.5vw, 3.8rem);
+            line-height: 0.92;
+            letter-spacing: 0.03em;
+        }
+
+        .need-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .need-card {
+            padding: 20px;
+            border-radius: 18px;
+            background: rgba(22, 22, 22, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .need-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 77, 77, 0.35);
+        }
+
+        .need-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            background: rgba(198, 40, 40, 0.15);
+            color: var(--rojo-vivo);
+            font-size: 1.15rem;
+        }
+
+        .need-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.03rem;
+        }
+
+        .need-card p {
+            color: #b8b8b8;
+            font-size: 0.93rem;
+            line-height: 1.65;
+        }
+
+        .need-list {
+            margin-top: 12px;
+            padding-left: 17px;
+            color: #9f9f9f;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .support-split {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .donation-card,
+        .support-card,
+        .contact-card {
+            padding: 24px;
+        }
+
+        .donation-card {
+            background: linear-gradient(160deg, rgba(80, 43, 43, 0.18), rgba(22, 22, 22, 0.96));
+            border: 1px solid rgba(198, 40, 40, 0.22);
+            border-radius: 24px;
+        }
+
+        .donation-card h3 {
+            font-size: 2.35rem;
+            margin-bottom: 10px;
+        }
+
+        .donation-card p {
+            color: #c2c2c2;
+            line-height: 1.7;
+        }
+
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 22px 0 16px;
+        }
+
+        .amount-btn {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--blanco-puro);
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .amount-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 77, 77, 0.28);
+        }
+
+        .amount-btn.active {
+            border-color: var(--rojo-alerta);
+            background: rgba(198, 40, 40, 0.14);
+        }
+
+        .amount-btn small {
+            display: block;
+            margin-top: 4px;
+            color: #9d9d9d;
+            font-size: 0.72rem;
+            line-height: 1.4;
+        }
+
+        .custom-amount {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .custom-amount span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8d8d8d;
+            font-family: var(--support-mono-font);
+        }
+
+        .custom-amount input {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--blanco-puro);
+            padding: 13px 14px 13px 34px;
+            font-size: 1rem;
+        }
+
+        .custom-amount input::placeholder {
+            color: #8f8f8f;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .donation-hint {
+            margin-top: 12px;
+            font-size: 0.88rem;
+        }
+
+        .support-card h4 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .priority-list,
+        .support-steps,
+        .contact-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .priority-item,
+        .step-item,
+        .contact-item {
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .priority-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 7px;
+            font-size: 0.92rem;
+        }
+
+        .priority-head span:last-child {
+            color: #9c9c9c;
+            font-family: var(--support-mono-font);
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .priority-track {
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .priority-fill {
+            height: 100%;
+            width: 0;
+            border-radius: inherit;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .step-item {
+            display: flex;
+            gap: 12px;
+        }
+
+        .step-index {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(198, 40, 40, 0.18);
+            color: var(--rojo-vivo);
+            font-weight: 700;
+            font-family: var(--support-mono-font);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .contact-item i {
+            margin-top: 3px;
+            color: var(--oro-light);
+            font-size: 1.02rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item a {
+            color: #d8d8d8;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--rojo-alerta);
+        }
+
+        .quote-panel {
+            margin-top: 18px;
+            padding: 34px 28px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.12), rgba(212, 168, 83, 0.06));
+            border: 1px solid rgba(198, 40, 40, 0.18);
+        }
+
+        .quote-text {
+            font-family: var(--support-title-font);
+            font-size: clamp(2rem, 4vw, 3.1rem);
+            line-height: 1.05;
+            letter-spacing: 0.03em;
+            color: var(--blanco-puro);
+            margin-bottom: 10px;
+        }
+
+        .quote-text em {
+            color: var(--rojo-alerta);
+            font-style: normal;
+        }
+
+        .quote-author {
+            color: #b0b0b0;
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a.active {
+            background: rgba(80, 43, 43, 0.5);
+            color: var(--amarillo-hover);
+        }
+
+        .support-whatsapp {
+            background: rgba(37, 211, 102, 0.88);
+            backdrop-filter: var(--blur-efecto);
+        }
+
+        .support-call {
+            background: rgba(163, 128, 22, 0.9);
+            backdrop-filter: var(--blur-efecto);
+        }
+
+        .support-donate {
+            background: rgba(80, 43, 43, 0.9);
+            backdrop-filter: var(--blur-efecto);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 1024px) {
+            .support-hero,
+            .support-split,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .need-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .support-hero {
+                padding-top: 36px;
+            }
+
+            .support-panel-head {
+                flex-direction: column;
+            }
+
+            .support-panel-head p {
+                text-align: left;
+            }
+
+            .need-grid,
+            .amount-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-actions,
+            .cta-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .support-btn {
+                width: 100%;
+            }
+
+            .support-section {
+                padding-top: 42px;
+            }
+        }
+    </style>
+</head>
+<body class="support-page">
+
+    <div class="static-logo-left" style="position: fixed !important; bottom: 30px !important; left: 30px !important; z-index: 99999 !important; top: auto !important;">
+        <img src="imagenes/primerslot/logo.jpg" alt="Logo Bomberos">
+    </div>
+
+    <div class="social-floating-menu" style="position: fixed !important; bottom: 30px !important; right: 30px !important; z-index: 99999 !important; top: auto !important;">
+        <div class="main-planet-btn">
+            <i class="fa-solid fa-earth-americas"></i>
+        </div>
+        <div class="sub-social-buttons">
+            <a href="https://wa.me/573113548281?text=Hola%2C%20quiero%20apoyar%20al%20Cuerpo%20de%20Bomberos%20Voluntarios%20de%20La%20Virginia." target="_blank" rel="noopener noreferrer" class="social-icon-btn support-whatsapp" title="WhatsApp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="tel:3113548281" class="social-icon-btn support-call" title="Llamar" aria-label="Llamar"><i class="fa-solid fa-phone"></i></a>
+            <a href="#donar" class="social-icon-btn support-donate" title="Donar" aria-label="Donar"><i class="fa-solid fa-hand-holding-heart"></i></a>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <header>
+        <div class="logo-container">
+            <i class="fa-solid fa-fire"></i>
+            <h1>BOMBEROS DE LA VIRGINIA</h1>
+        </div>
+        <button class="menu-hamburger" id="hamburgerBtn" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <nav class="nav-menu" id="navMenu">
+        <a href="index.html#inicio"><i class="fa-solid fa-house" style="margin-right: 10px;"></i> Inicio</a>
+        <a href="SobreNosotros.html"><i class="fa-solid fa-users" style="margin-right: 10px;"></i> Sobre Nosotros</a>
+        <a href="#apoyo" class="active"><i class="fa-solid fa-hand-holding-heart" style="margin-right: 10px;"></i> Apoyo</a>
+        <a href="#contacto"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> Contacta</a>
+    </nav>
+
+    <main class="support-main">
+        <section class="support-hero" id="inicio">
+            <div class="support-copy reveal">
+                <div class="support-kicker">Apoyo ciudadano · voluntariado</div>
+                <h2 class="support-title">Tu apoyo<br><span>mantiene la respuesta en marcha</span></h2>
+                <p class="support-lead">Somos un cuerpo de bomberos voluntario. Cada aporte ayuda a sostener equipos, mantenimiento y capacitación para seguir respondiendo a la comunidad de La Virginia.</p>
+                <div class="support-actions">
+                    <a class="support-btn primary" id="heroWhatsapp" href="https://wa.me/573113548281?text=Hola%2C%20quiero%20apoyar%20al%20Cuerpo%20de%20Bomberos%20Voluntarios%20de%20La%20Virginia%20con%20%2420.000.%20%C2%BFMe%20pueden%20orientar%3F" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Apoyar por WhatsApp</a>
+                    <a class="support-btn secondary" href="#donar"><i class="fa-solid fa-sack-dollar"></i> Elegir un monto</a>
+                </div>
+                <div class="support-tags">
+                    <span class="support-tag">Voluntariado 24/7</span>
+                    <span class="support-tag">La Virginia, Risaralda</span>
+                    <span class="support-tag">Apoyo en dinero o especie</span>
+                </div>
+            </div>
+
+            <aside class="support-panel reveal">
+                <div class="support-panel-head">
+                    <h3>Necesidades prioritarias</h3>
+                    <p>Lo que más ayuda a sostener la operación diaria.</p>
+                </div>
+                <div class="support-list">
+                    <div class="support-list-item">
+                        <i class="fa-solid fa-helmet-safety"></i>
+                        <div>
+                            <strong>Equipo de protección</strong>
+                            <span>Elementos para intervenir con seguridad en incendios y rescates.</span>
+                        </div>
+                    </div>
+                    <div class="support-list-item">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <div>
+                            <strong>Mantenimiento de unidades</strong>
+                            <span>Repuestos, servicio y cuidado de las máquinas que salen a responder.</span>
+                        </div>
+                    </div>
+                    <div class="support-list-item">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <div>
+                            <strong>Capacitación continua</strong>
+                            <span>Formación y simulacros para mantener el nivel operativo del equipo.</span>
+                        </div>
+                    </div>
+                    <div class="support-list-item">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <div>
+                            <strong>Insumos logísticos</strong>
+                            <span>Apoyo para comunicaciones, hidratación y respuesta en escena.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="support-panel-note">Si prefieres donar en especie, escríbenos y coordinamos la entrega.</div>
+            </aside>
+        </section>
+
+        <section class="support-section" id="apoyo">
+            <div class="section-heading reveal">
+                <div class="section-eyebrow">Destino del apoyo</div>
+                <h2>¿En qué se concentra tu ayuda?</h2>
+            </div>
+
+            <div class="need-grid">
+                <article class="need-card reveal">
+                    <div class="need-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Protección</h3>
+                    <p>Ayuda a sostener la seguridad del personal que interviene en cada emergencia.</p>
+                    <ul class="need-list">
+                        <li>Casco, guantes y botas</li>
+                        <li>Elementos de seguridad</li>
+                        <li>Equipos de intervención</li>
+                    </ul>
+                </article>
+                <article class="need-card reveal" style="transition-delay: 0.05s;">
+                    <div class="need-icon"><i class="fa-solid fa-truck"></i></div>
+                    <h3>Unidades</h3>
+                    <p>El apoyo permite mantener operativos los vehículos y el equipo técnico de respuesta.</p>
+                    <ul class="need-list">
+                        <li>Mantenimiento preventivo</li>
+                        <li>Repuestos y servicio</li>
+                        <li>Combustible y operación</li>
+                    </ul>
+                </article>
+                <article class="need-card reveal" style="transition-delay: 0.1s;">
+                    <div class="need-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                    <h3>Formación</h3>
+                    <p>La capacitación continua fortalece la prevención y mejora la atención de incidentes.</p>
+                    <ul class="need-list">
+                        <li>Simulacros y prácticas</li>
+                        <li>Prevención comunitaria</li>
+                        <li>Actualización técnica</li>
+                    </ul>
+                </article>
+                <article class="need-card reveal" style="transition-delay: 0.15s;">
+                    <div class="need-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <h3>Logística</h3>
+                    <p>Los insumos de apoyo hacen posible una respuesta ordenada y segura en campo.</p>
+                    <ul class="need-list">
+                        <li>Hidratación y bienestar</li>
+                        <li>Comunicaciones</li>
+                        <li>Apoyo de escena</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="support-section" id="donar">
+            <div class="section-heading reveal">
+                <div class="section-eyebrow">Contribución directa</div>
+                <h2>Escoge tu aporte</h2>
+            </div>
+
+            <div class="support-split">
+                <div class="donation-card reveal">
+                    <h3>Elige un monto</h3>
+                    <p>Selecciona una sugerencia o escribe el valor que quieras apoyar. WhatsApp se abrirá con tu mensaje listo para enviar.</p>
+
+                    <div class="amount-grid" id="amountGrid">
+                        <button type="button" class="amount-btn" data-amount="10000" aria-pressed="false">$10.000<small>Aporte inicial</small></button>
+                        <button type="button" class="amount-btn active" data-amount="20000" aria-pressed="true">$20.000<small>Apoyo frecuente</small></button>
+                        <button type="button" class="amount-btn" data-amount="50000" aria-pressed="false">$50.000<small>Impulso operativo</small></button>
+                        <button type="button" class="amount-btn" data-amount="100000" aria-pressed="false">$100.000<small>Gran respaldo</small></button>
+                    </div>
+
+                    <div class="custom-amount">
+                        <span>$</span>
+                        <input type="text" id="customAmount" inputmode="numeric" placeholder="Otro valor, por ejemplo 35.000" autocomplete="off">
+                    </div>
+
+                    <div class="cta-row">
+                        <a id="donateWhatsapp" class="support-btn primary" href="https://wa.me/573113548281?text=Hola%2C%20quiero%20apoyar%20al%20Cuerpo%20de%20Bomberos%20Voluntarios%20de%20La%20Virginia%20con%20%2420.000.%20%C2%BFMe%20pueden%20orientar%3F" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp</a>
+                        <a class="support-btn secondary" href="tel:3113548281"><i class="fa-solid fa-phone"></i> Llamar ahora</a>
+                    </div>
+
+                    <div class="donation-hint" id="amountSummary">Monto sugerido: $20.000</div>
+                </div>
+
+                <div class="support-card reveal" style="transition-delay: 0.05s;">
+                    <h4>Formas de apoyo</h4>
+                    <div class="support-steps">
+                        <div class="step-item">
+                            <div class="step-index">1</div>
+                            <div>
+                                <strong>Aporte monetario</strong>
+                                <span>Coordina tu apoyo por WhatsApp y te orientamos sobre la entrega.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-index">2</div>
+                            <div>
+                                <strong>Donación en especie</strong>
+                                <span>Herramientas, insumos o elementos de protección que puedas aportar.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-index">3</div>
+                            <div>
+                                <strong>Difusión comunitaria</strong>
+                                <span>Comparte esta campaña para que más personas conozcan la necesidad.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="support-panel-note">Si una empresa o institución quiere apoyar una jornada especial, también podemos ayudar a coordinarla.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="support-quote">
+            <div class="quote-panel reveal">
+                <div class="quote-text">No necesitas ser bombero para salvar una vida.<br><em>Con tu apoyo, nosotros la hacemos posible.</em></div>
+                <div class="quote-author">Solidaridad que protege a La Virginia</div>
+            </div>
+        </section>
+
+        <section class="support-section" id="contacto">
+            <div class="section-heading reveal">
+                <div class="section-eyebrow">Contacto directo</div>
+                <h2>Hablemos de tu apoyo</h2>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card reveal">
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <div>
+                                <strong>WhatsApp</strong>
+                                <a href="https://wa.me/573113548281?text=Hola%2C%20quiero%20apoyar%20al%20Cuerpo%20de%20Bomberos%20Voluntarios%20de%20La%20Virginia." target="_blank" rel="noopener noreferrer">311 354 82 81</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <a href="tel:3113548281">311 354 82 81</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <strong>Dirección</strong>
+                                <span>Benemérito Cuerpo de Bomberos Voluntarios La Virginia</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <div>
+                                <strong>Emergencias</strong>
+                                <a href="tel:3113548281">Atención 24/7 en la línea 311 354 82 81</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="support-card reveal" style="transition-delay: 0.05s;">
+                    <h4>¿Quieres organizar una jornada?</h4>
+                    <div class="support-steps">
+                        <div class="step-item">
+                            <div class="step-index">1</div>
+                            <div>
+                                <strong>Escríbenos</strong>
+                                <span>Cuéntanos si se trata de una campaña, donación o actividad institucional.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-index">2</div>
+                            <div>
+                                <strong>Acordamos la forma de apoyo</strong>
+                                <span>Definimos si será en dinero, especie o difusión comunitaria.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-index">3</div>
+                            <div>
+                                <strong>Coordinamos la entrega</strong>
+                                <span>Te indicamos el mejor momento y la forma de realizarla.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="emergency-box">
+                    <h3>En caso de emergencia llama a esta línea 🚨</h3>
+                    <a href="tel:3113548281" class="emergency-phone">311 354 82 81</a>
+                </div>
+                <p class="footer-motto">Valor, Abnegación y Disciplina</p>
+                <div class="credits">
+                    <p>Desarrollado por: Jesus Leonardo Clavo Ochoa &amp; Jhojan Andres Murcia Muñoz</p>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <p style="margin-bottom: 14px; color: #bdbdbd; line-height: 1.6;">Gracias por apoyar el servicio voluntario del Cuerpo de Bomberos de La Virginia.</p>
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.171731557008!2d-75.8824106!3d4.8942693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e387f39b6da5555%3A0xcf9da67ea107ad0e!2sBenem%C3%A9rito%20Cuerpo%20de%20Bomberos%20Voluntarios%20La%20Virginia!5e0!3m2!1ses!2sco!4v1717694400000!5m2!1ses!2sco"
+                        width="100%"
+                        height="220"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        title="Ubicación del Cuerpo de Bomberos Voluntarios La Virginia"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const whatsappBase = 'https://wa.me/573113548281?text=';
+        const amountButtons = document.querySelectorAll('.amount-btn');
+        const customAmount = document.getElementById('customAmount');
+        const heroWhatsapp = document.getElementById('heroWhatsapp');
+        const donateWhatsapp = document.getElementById('donateWhatsapp');
+        const amountSummary = document.getElementById('amountSummary');
+        const defaultButton = document.querySelector('.amount-btn.active');
+
+        function formatAmount(value) {
+            const digits = String(value).replace(/\D/g, '');
+            if (!digits) {
+                return '';
+            }
+            return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function buildMessage(amountText) {
+            if (amountText) {
+                return `Hola, quiero apoyar al Cuerpo de Bomberos Voluntarios de La Virginia con $${amountText}. ¿Me pueden orientar?`;
+            }
+            return 'Hola, quiero apoyar al Cuerpo de Bomberos Voluntarios de La Virginia. ¿Me pueden orientar?';
+        }
+
+        function syncWhatsAppLinks(amountText, isCustom = false) {
+            const formattedAmount = amountText ? formatAmount(amountText) : '';
+            const message = buildMessage(formattedAmount || '');
+            const url = `${whatsappBase}${encodeURIComponent(message)}`;
+
+            heroWhatsapp.href = url;
+            donateWhatsapp.href = url;
+            amountSummary.textContent = formattedAmount
+                ? (isCustom ? `Monto personalizado: $${formattedAmount}` : `Monto sugerido: $${formattedAmount}`)
+                : 'Monto sugerido: $20.000';
+        }
+
+        function setActiveAmount(button) {
+            amountButtons.forEach(current => {
+                const isActive = current === button;
+                current.classList.toggle('active', isActive);
+                current.setAttribute('aria-pressed', String(isActive));
+            });
+
+            customAmount.value = '';
+            syncWhatsAppLinks(button.dataset.amount, false);
+        }
+
+        amountButtons.forEach(button => {
+            button.addEventListener('click', () => setActiveAmount(button));
+        });
+
+        customAmount.addEventListener('input', () => {
+            const digits = customAmount.value.replace(/\D/g, '');
+
+            if (!digits) {
+                if (defaultButton) {
+                    setActiveAmount(defaultButton);
+                } else {
+                    syncWhatsAppLinks('', false);
+                }
+                return;
+            }
+
+            amountButtons.forEach(current => {
+                current.classList.remove('active');
+                current.setAttribute('aria-pressed', 'false');
+            });
+
+            customAmount.value = formatAmount(digits);
+            syncWhatsAppLinks(digits, true);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                entry.target.classList.add('visible');
+
+                entry.target.querySelectorAll('.priority-fill').forEach(fill => {
+                    if (fill.dataset.animated) {
+                        return;
+                    }
+
+                    fill.dataset.animated = '1';
+                    fill.style.width = `${fill.dataset.width}%`;
+                });
+            });
+        }, { threshold: 0.18 });
+
+        document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+        syncWhatsAppLinks('20000', false);
+    </script>
+</body>
+</html>

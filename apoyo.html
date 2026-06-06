@@ -45,6 +45,38 @@
             opacity: 0.45;
         }
 
+        @keyframes supportFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes supportSweep {
+            0% { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+            20% { opacity: 0.55; }
+            100% { transform: translateX(120%) skewX(-18deg); opacity: 0; }
+        }
+
+        @keyframes supportPress {
+            0% { opacity: 0.6; transform: scale(0.92); }
+            100% { opacity: 0; transform: scale(1.35); }
+        }
+
+        @keyframes supportPop {
+            0% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-3px) scale(1.03); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        @keyframes supportSpark {
+            0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.6); }
+            100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2); }
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
         .support-main {
             position: relative;
             z-index: 1;
@@ -126,10 +158,62 @@
             font-weight: 700;
             border: 1px solid transparent;
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
         }
 
         .support-btn:hover {
             transform: translateY(-2px);
+        }
+
+        .support-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .support-btn::before,
+        .amount-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
+            transform: translateX(-120%) skewX(-18deg);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .support-btn:hover::before,
+        .amount-btn:hover::before {
+            animation: supportSweep 0.9s ease;
+        }
+
+        .support-btn::after,
+        .amount-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--press-x, 50%) var(--press-y, 50%), rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.18) 12%, transparent 35%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .support-btn.is-pressed::after,
+        .amount-btn.is-pressed::after {
+            animation: supportPress 0.55s ease-out;
+        }
+
+        .support-btn.is-pressed,
+        .amount-btn.is-pressed,
+        .amount-btn.is-selected-burst {
+            animation: supportPop 0.55s ease;
+        }
+
+        .support-btn > *,
+        .amount-btn > * {
+            position: relative;
+            z-index: 1;
         }
 
         .support-btn:focus-visible,
@@ -165,17 +249,40 @@
             background: rgba(255, 255, 255, 0.03);
             color: #d5d5d5;
             font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .support-tag i {
+            color: var(--oro-light);
+            font-size: 0.8rem;
         }
 
         .support-panel,
         .support-card,
         .contact-card,
-        .quote-panel {
+        .quote-panel,
+        .donation-card {
             background: rgba(22, 22, 22, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
             box-shadow: 0 20px 55px rgba(0, 0, 0, 0.32);
             backdrop-filter: blur(14px);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+            overflow: hidden;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .support-panel:hover,
+        .support-card:hover,
+        .contact-card:hover,
+        .quote-panel:hover,
+        .donation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.42);
+            border-color: rgba(255, 255, 255, 0.10);
         }
 
         .support-panel {
@@ -222,6 +329,13 @@
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+        }
+
+        .support-list-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(212, 168, 83, 0.22);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .support-list-item i {
@@ -229,6 +343,25 @@
             color: var(--oro-light);
             font-size: 1.02rem;
             flex-shrink: 0;
+            transition: transform 0.22s ease, color 0.22s ease;
+        }
+
+        .support-list-item:hover i {
+            transform: scale(1.12) rotate(-6deg);
+            color: var(--blanco-puro);
+        }
+
+        .button-spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.55) 35%, rgba(255, 255, 255, 0) 72%);
+            pointer-events: none;
+            z-index: 0;
+            animation: supportSpark 0.72s ease-out forwards;
+            animation-delay: var(--delay, 0s);
+            mix-blend-mode: screen;
         }
 
         .support-list-item strong,
@@ -264,12 +397,29 @@
             background: #0f0f0f;
         }
 
+        .support-panel-media::before {
+            content: '';
+            position: absolute;
+            inset: -18%;
+            background: radial-gradient(circle at 25% 25%, rgba(212, 168, 83, 0.22), transparent 34%), radial-gradient(circle at 80% 10%, rgba(255, 77, 77, 0.16), transparent 28%);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 1;
+            animation: badgeFloat 9s ease-in-out infinite;
+        }
+
         .support-panel-media img {
             width: 100%;
             height: 100%;
             display: block;
             object-fit: cover;
             filter: saturate(0.92) contrast(1.05);
+            transition: transform 0.8s ease, filter 0.8s ease;
+        }
+
+        .support-panel-media:hover img {
+            transform: scale(1.05);
+            filter: saturate(1) contrast(1.08);
         }
 
         .support-panel-media::after {
@@ -277,12 +427,13 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.82) 100%);
+            z-index: 1;
         }
 
         .support-panel-media-copy {
             position: absolute;
             inset: auto 16px 16px;
-            z-index: 1;
+            z-index: 2;
         }
 
         .support-panel-media-copy .support-kicker {
@@ -307,6 +458,45 @@
             font-size: 0.93rem;
         }
 
+        .support-panel-badges {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .support-panel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(13, 13, 13, 0.58);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--blanco-puro);
+            font-family: var(--support-mono-font);
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            backdrop-filter: blur(12px);
+            animation: badgeFloat 6s ease-in-out infinite;
+        }
+
+        .support-panel-badge:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .support-panel-badge:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        .support-panel-badge i {
+            color: var(--oro-light);
+        }
+
         .support-stats {
             max-width: 1200px;
             margin: 22px auto 0;
@@ -324,6 +514,31 @@
             background: rgba(22, 22, 22, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .support-stat:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 168, 83, 0.24);
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
+        }
+
+        .support-stat i {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--oro-light);
+            background: rgba(212, 168, 83, 0.08);
+            border: 1px solid rgba(212, 168, 83, 0.18);
+            margin-bottom: 4px;
+            animation: supportFloat 5.5s ease-in-out infinite;
         }
 
         .support-stat strong {
@@ -382,12 +597,17 @@
             border-radius: 18px;
             background: rgba(22, 22, 22, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
         }
 
         .need-card:hover {
             transform: translateY(-3px);
             border-color: rgba(255, 77, 77, 0.35);
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+            background: rgba(22, 22, 22, 0.95);
         }
 
         .need-icon {
@@ -401,6 +621,13 @@
             background: rgba(198, 40, 40, 0.15);
             color: var(--rojo-vivo);
             font-size: 1.15rem;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+        }
+
+        .need-card:hover .need-icon {
+            transform: translateY(-3px) rotate(-4deg) scale(1.06);
+            background: rgba(198, 40, 40, 0.22);
+            box-shadow: 0 10px 20px rgba(198, 40, 40, 0.16);
         }
 
         .need-card h3 {
@@ -484,6 +711,7 @@
         .amount-btn.active {
             border-color: var(--rojo-alerta);
             background: rgba(198, 40, 40, 0.14);
+            box-shadow: 0 12px 28px rgba(198, 40, 40, 0.16);
         }
 
         .amount-btn small {
@@ -561,6 +789,16 @@
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             background: rgba(255, 255, 255, 0.03);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(212, 168, 83, 0.22);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .priority-head {
@@ -631,6 +869,12 @@
             color: var(--oro-light);
             font-size: 1.02rem;
             flex-shrink: 0;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .contact-item:hover i {
+            transform: scale(1.12);
+            color: var(--blanco-puro);
         }
 
         .contact-item a {
@@ -804,15 +1048,20 @@
                     <a class="support-btn secondary" href="#donar"><i class="fa-solid fa-sack-dollar"></i> Elegir un monto</a>
                 </div>
                 <div class="support-tags">
-                    <span class="support-tag">Voluntariado 24/7</span>
-                    <span class="support-tag">La Virginia, Risaralda</span>
-                    <span class="support-tag">Apoyo en dinero o especie</span>
+                    <span class="support-tag"><i class="fa-solid fa-bolt"></i> Voluntariado 24/7</span>
+                    <span class="support-tag"><i class="fa-solid fa-location-dot"></i> La Virginia, Risaralda</span>
+                    <span class="support-tag"><i class="fa-solid fa-hand-holding-heart"></i> Dinero o especie</span>
                 </div>
             </div>
 
             <aside class="support-panel reveal">
                 <div class="support-panel-media">
                     <img src="imagenes/primerslot/slot1-4.jpeg" alt="Bomberos voluntarios en operación">
+                    <div class="support-panel-badges" aria-hidden="true">
+                        <span class="support-panel-badge"><i class="fa-solid fa-shield-heart"></i> Seguridad</span>
+                        <span class="support-panel-badge"><i class="fa-solid fa-fire-flame-curved"></i> Respuesta</span>
+                        <span class="support-panel-badge"><i class="fa-solid fa-hand-holding-heart"></i> Comunidad</span>
+                    </div>
                     <div class="support-panel-media-copy">
                         <div class="support-kicker">Respuesta 24/7</div>
                         <strong>61 años respondiendo</strong>
@@ -860,18 +1109,22 @@
 
         <section class="support-stats reveal" id="impacto">
             <div class="support-stat">
+                <i class="fa-solid fa-calendar-check"></i>
                 <strong>61+</strong>
                 <span>Años respondiendo</span>
             </div>
             <div class="support-stat">
+                <i class="fa-solid fa-fire-extinguisher"></i>
                 <strong>438</strong>
                 <span>Emergencias atendidas en 2024</span>
             </div>
             <div class="support-stat">
+                <i class="fa-solid fa-people-group"></i>
                 <strong>34</strong>
                 <span>Voluntarios activos</span>
             </div>
             <div class="support-stat">
+                <i class="fa-solid fa-graduation-cap"></i>
                 <strong>1.240</strong>
                 <span>Personas capacitadas</span>
             </div>
@@ -1085,6 +1338,60 @@
         const amountFeedback = document.getElementById('amountFeedback');
         const defaultButton = document.querySelector('.amount-btn.active');
 
+        function pressEffect(target, event) {
+            if (!target) {
+                return;
+            }
+
+            const rect = target.getBoundingClientRect();
+            const x = event ? event.clientX - rect.left : rect.width / 2;
+            const y = event ? event.clientY - rect.top : rect.height / 2;
+
+            target.style.setProperty('--press-x', `${x}px`);
+            target.style.setProperty('--press-y', `${y}px`);
+            target.classList.remove('is-pressed');
+            void target.offsetWidth;
+            target.classList.add('is-pressed');
+
+            clearTimeout(target._pressTimer);
+            target._pressTimer = setTimeout(() => {
+                target.classList.remove('is-pressed');
+            }, 580);
+        }
+
+        function spawnSparks(target, count = 4) {
+            if (!target) {
+                return;
+            }
+
+            const rect = target.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            for (let index = 0; index < count; index += 1) {
+                const spark = document.createElement('span');
+                spark.className = 'button-spark';
+                spark.style.left = `${centerX}px`;
+                spark.style.top = `${centerY}px`;
+
+                const angle = ((Math.PI * 2) / count) * index + (Math.random() * 0.45 - 0.22);
+                const distance = 22 + Math.random() * 18;
+                spark.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+                spark.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
+                spark.style.setProperty('--delay', `${Math.random() * 0.08}s`);
+
+                target.appendChild(spark);
+                spark.addEventListener('animationend', () => spark.remove());
+            }
+        }
+
+        document.querySelectorAll('.support-btn, .amount-btn').forEach(target => {
+            target.addEventListener('pointerdown', (event) => {
+                pressEffect(target, event);
+                spawnSparks(target, target.classList.contains('amount-btn') ? 6 : 4);
+            });
+        });
+
         function normalizeAmount(value) {
             return String(value).replace(/\D/g, '');
         }
@@ -1099,7 +1406,7 @@
 
         function buildMessage(amountText) {
             return amountText
-                ? `Hola, quiero apoyar con $${amountText}. ¿Me pueden orientar?`
+                ? `Hola, quiero apoyar al Cuerpo de Bomberos Voluntarios de La Virginia con $${amountText}. ¿Me pueden orientar?`
                 : 'Hola, quiero apoyar al Cuerpo de Bomberos Voluntarios de La Virginia. ¿Me pueden orientar?';
         }
 
@@ -1128,6 +1435,14 @@
             });
 
             customAmount.value = '';
+            button.classList.remove('is-selected-burst');
+            void button.offsetWidth;
+            button.classList.add('is-selected-burst');
+            clearTimeout(button._burstTimer);
+            button._burstTimer = setTimeout(() => {
+                button.classList.remove('is-selected-burst');
+            }, 580);
+
             if (amountFeedback) {
                 amountFeedback.textContent = 'Solo números. Los separadores se corrigen automáticamente.';
             }

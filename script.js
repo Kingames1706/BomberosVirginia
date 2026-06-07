@@ -42,17 +42,43 @@ function initAutoSlider(sliderId, intervalTime) {
     }
 
     let currentSlideIndex = 0;
+    let intervalId = null;
 
-    setInterval(() => {
+    const advanceSlide = () => {
         slides[currentSlideIndex].classList.remove('active');
         currentSlideIndex = (currentSlideIndex + 1) % slides.length;
         slides[currentSlideIndex].classList.add('active');
-    }, intervalTime);
+    };
+
+    const startSlider = () => {
+        if (intervalId) {
+            return;
+        }
+
+        intervalId = setInterval(advanceSlide, intervalTime);
+    };
+
+    const stopSlider = () => {
+        if (!intervalId) {
+            return;
+        }
+
+        clearInterval(intervalId);
+        intervalId = null;
+    };
+
+    startSlider();
+
+    sliderContainer.addEventListener('mouseenter', stopSlider);
+    sliderContainer.addEventListener('mouseleave', startSlider);
+    sliderContainer.addEventListener('focusin', stopSlider);
+    sliderContainer.addEventListener('focusout', startSlider);
 }
 
 // Inicializamos los sliders solo si existen en la página
 initAutoSlider('slider1', 3500);
 initAutoSlider('slider2', 4000);
+initAutoSlider('slider3', 4200);
 
 document.querySelectorAll('.btn-donation').forEach(button => {
     button.addEventListener('click', () => {

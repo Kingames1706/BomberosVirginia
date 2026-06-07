@@ -18,6 +18,307 @@
         .static-logo-left { background-color: rgba(255,255,255,0.95) !important; }
         .social-floating-menu .main-planet-btn { background: rgba(80,43,43,0.9) !important; }
         main { max-width: 1100px; margin: 0 auto; }
+
+        .crew-section {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            margin-bottom: 22px;
+            padding: 0;
+            background: linear-gradient(160deg, #160f0f 0%, #1f1717 50%, #111111 100%);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+        .crew-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(163, 128, 22, 0.18), transparent 28%),
+                radial-gradient(circle at 85% 0%, rgba(255, 77, 77, 0.16), transparent 24%),
+                linear-gradient(120deg, rgba(255,255,255,0.03) 0%, transparent 40%, rgba(255,255,255,0.02) 60%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .crew-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0));
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .crew-inner {
+            position: relative;
+            z-index: 1;
+            padding: 30px;
+        }
+
+        .crew-top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .crew-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #f3d27a;
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .crew-title {
+            font-family: var(--fuente-principal);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1;
+            margin: 0 0 12px;
+            color: #fff;
+        }
+
+        .crew-subtitle {
+            max-width: 64ch;
+            color: #d1d1d1;
+            line-height: 1.7;
+        }
+
+        .crew-badge {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 2px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: crewFloat 6s ease-in-out infinite;
+        }
+
+        .crew-badge i {
+            color: var(--rojo-alerta);
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .crew-badge strong {
+            font-family: var(--fuente-principal);
+            font-size: 1.5rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .crew-badge span {
+            font-size: 0.78rem;
+            color: #c9c9c9;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .crew-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+            gap: 18px;
+        }
+
+        .crew-slider-shell {
+            padding: 14px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 16px 38px rgba(0,0,0,0.18);
+        }
+
+        .crew-slider {
+            height: 460px;
+        }
+
+        .crew-slide {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr);
+            gap: 16px;
+            padding: 16px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            box-sizing: border-box;
+        }
+
+        .crew-photo-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            min-height: 100%;
+            background: #0d0d0d;
+        }
+
+        .crew-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.8s ease, filter 0.8s ease;
+        }
+
+        .crew-slide.active .crew-photo-wrap img {
+            transform: scale(1.04);
+            filter: saturate(1.05);
+        }
+
+        .crew-photo-overlay {
+            position: absolute;
+            inset: auto 12px 12px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 1;
+        }
+
+        .crew-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .crew-live i {
+            color: var(--rojo-alerta);
+            font-size: 0.5rem;
+        }
+
+        .crew-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4px 4px 4px 0;
+        }
+
+        .crew-role {
+            color: var(--amarillo-hover);
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .crew-copy h3 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .crew-copy p {
+            color: #d0d0d0;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .crew-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .crew-pills span {
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 0.78rem;
+        }
+
+        .crew-side {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .crew-side-card {
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .crew-side-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(212,168,83,0.24);
+        }
+
+        .crew-side-card i {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            background: rgba(198,40,40,0.16);
+            color: var(--rojo-alerta);
+        }
+
+        .crew-side-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .crew-side-card p {
+            color: #c8c8c8;
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .crew-note {
+            margin-top: 4px;
+            font-size: 0.84rem;
+            color: #a9a9a9;
+        }
+
+        @keyframes crewFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @media (max-width: 900px) {
+            .crew-grid { grid-template-columns: 1fr; }
+            .crew-slider { height: 620px; }
+            .crew-slide { grid-template-columns: 1fr; }
+            .crew-copy { padding: 0 4px 4px; }
+        }
+
+        @media (max-width: 640px) {
+            .crew-inner { padding: 22px; }
+            .crew-top { flex-direction: column; align-items: flex-start; }
+            .crew-slider { height: 700px; }
+        }
     </style>
 </head>
 <body>
@@ -52,6 +353,7 @@
     <nav class="nav-menu" id="navMenu">
         <a href="index.html#inicio"><i class="fa-solid fa-house" style="margin-right: 10px;"></i> Inicio</a>
         <a href="SobreNosotros.html"><i class="fa-solid fa-users" style="margin-right: 10px;"></i> Sobre Nosotros</a>
+        <a href="#equipo"><i class="fa-solid fa-helmet-safety" style="margin-right: 10px;"></i> Equipo</a>
         <a href="index.html#contacta"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> Contacta</a>
         <a href="apoyo.html#apoyo"><i class="fa-solid fa-hand-holding-heart" style="margin-right: 10px;"></i> Apoyo</a>
     </nav>
@@ -65,6 +367,148 @@
         <section class="section-card">
             <h2>Nuestra Historia</h2>
             <p>Desde 1963 hemos servido con valentía y dedicación. Mantenemos programas de formación continua, mantenimiento de equipos y colaboración interinstitucional para garantizar respuestas seguras y profesionales.</p>
+        </section>
+
+        <section class="crew-section" id="equipo">
+            <div class="crew-inner">
+                <div class="crew-top">
+                    <div>
+                        <div class="crew-eyebrow"><i class="fa-solid fa-helmet-safety"></i> Mando y personal</div>
+                        <h2 class="crew-title">Nuestro equipo operativo</h2>
+                        <p class="crew-subtitle">Conoce a quienes sostienen el servicio 24/7: mando, guardia y equipos de apoyo. Las fotografías son institucionales y los rótulos pueden ajustarse luego con nombres reales si nos los compartes.</p>
+                    </div>
+                    <div class="crew-badge">
+                        <i class="fa-solid fa-shield-heart"></i>
+                        <strong>24/7</strong>
+                        <span>servicio voluntario</span>
+                    </div>
+                </div>
+
+                <div class="crew-grid">
+                    <div class="crew-slider-shell">
+                        <div class="slider-wrapper crew-slider" id="slider3">
+                            <article class="slide crew-slide active">
+                                <div class="crew-photo-wrap">
+                                    <img src="Galery/WhatsApp%20Image%202026-06-06%20at%2012.12.55%20PM.jpeg" alt="Capitanía del cuerpo de bomberos">
+                                    <div class="crew-photo-overlay">
+                                        <span class="crew-live"><i class="fa-solid fa-circle"></i> En servicio</span>
+                                        <span class="crew-live">Perfil 01</span>
+                                    </div>
+                                </div>
+                                <div class="crew-copy">
+                                    <div class="crew-role">Capitanía</div>
+                                    <h3>Liderazgo y coordinación</h3>
+                                    <p>Dirección operativa, toma de decisiones y coordinación de respuesta para emergencias en La Virginia.</p>
+                                    <div class="crew-pills">
+                                        <span>Comando</span>
+                                        <span>Disciplina</span>
+                                        <span>Servicio</span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="slide crew-slide">
+                                <div class="crew-photo-wrap">
+                                    <img src="Galery/WhatsApp%20Image%202026-06-06%20at%2012.10.58%20PM.jpeg" alt="Subcomandancia del cuerpo de bomberos">
+                                    <div class="crew-photo-overlay">
+                                        <span class="crew-live"><i class="fa-solid fa-circle"></i> Guardia activa</span>
+                                        <span class="crew-live">Perfil 02</span>
+                                    </div>
+                                </div>
+                                <div class="crew-copy">
+                                    <div class="crew-role">Subcomandancia</div>
+                                    <h3>Apoyo estratégico</h3>
+                                    <p>Seguimiento de operaciones, turnos y respaldo al mando para mantener el servicio continuo.</p>
+                                    <div class="crew-pills">
+                                        <span>Respaldo</span>
+                                        <span>Turnos</span>
+                                        <span>Coordinación</span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="slide crew-slide">
+                                <div class="crew-photo-wrap">
+                                    <img src="Galery/WhatsApp%20Image%202026-06-06%20at%2012.09.46%20PM.jpeg" alt="Equipo de rescate y respuesta">
+                                    <div class="crew-photo-overlay">
+                                        <span class="crew-live"><i class="fa-solid fa-circle"></i> Respuesta</span>
+                                        <span class="crew-live">Perfil 03</span>
+                                    </div>
+                                </div>
+                                <div class="crew-copy">
+                                    <div class="crew-role">Rescate y respuesta</div>
+                                    <h3>Atención técnica</h3>
+                                    <p>Intervención en incendios, rescates y apoyos de emergencia con disciplina y cuidado.</p>
+                                    <div class="crew-pills">
+                                        <span>Rescate</span>
+                                        <span>Técnica</span>
+                                        <span>Seguridad</span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="slide crew-slide">
+                                <div class="crew-photo-wrap">
+                                    <img src="Galery/WhatsApp%20Image%202026-06-06%20at%2012.08.42%20PM.jpeg" alt="Equipo de prevención comunitaria">
+                                    <div class="crew-photo-overlay">
+                                        <span class="crew-live"><i class="fa-solid fa-circle"></i> Prevención</span>
+                                        <span class="crew-live">Perfil 04</span>
+                                    </div>
+                                </div>
+                                <div class="crew-copy">
+                                    <div class="crew-role">Prevención comunitaria</div>
+                                    <h3>Educación y cultura de autoprotección</h3>
+                                    <p>Charlas, visitas y acompañamiento a colegios, empresas y hogares para reducir riesgos.</p>
+                                    <div class="crew-pills">
+                                        <span>Escuelas</span>
+                                        <span>Hogares</span>
+                                        <span>Empresas</span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="slide crew-slide">
+                                <div class="crew-photo-wrap">
+                                    <img src="Galery/WhatsApp%20Image%202026-06-06%20at%2011.30.29%20AM.jpeg" alt="Guardia operativa del cuerpo de bomberos">
+                                    <div class="crew-photo-overlay">
+                                        <span class="crew-live"><i class="fa-solid fa-circle"></i> Listos</span>
+                                        <span class="crew-live">Perfil 05</span>
+                                    </div>
+                                </div>
+                                <div class="crew-copy">
+                                    <div class="crew-role">Guardia operativa</div>
+                                    <h3>Servicio y entrega</h3>
+                                    <p>Guardias permanentes, comunicaciones y apoyo mutuo para responder cuando la comunidad lo necesita.</p>
+                                    <div class="crew-pills">
+                                        <span>24 horas</span>
+                                        <span>Equipo</span>
+                                        <span>Comunidad</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <aside class="crew-side">
+                        <article class="crew-side-card">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                            <strong>Prevención comunitaria</strong>
+                            <p>Capacitación, visitas y acompañamiento a escuelas, empresas y barrios.</p>
+                        </article>
+                        <article class="crew-side-card">
+                            <i class="fa-solid fa-truck-medical"></i>
+                            <strong>Atención y rescate</strong>
+                            <p>Respuesta técnica para incendios, rescates y asistencia en emergencias.</p>
+                        </article>
+                        <article class="crew-side-card">
+                            <i class="fa-solid fa-users-rays"></i>
+                            <strong>Trabajo en equipo</strong>
+                            <p>Turnos, guardias y respaldo mutuo para sostener el servicio continuo.</p>
+                            <div class="crew-note">Si luego me pasas nombres y cargos reales, los integro aquí.</div>
+                        </article>
+                    </aside>
+                </div>
+            </div>
         </section>
 
         <section class="section-card">

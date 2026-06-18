@@ -4,28 +4,96 @@ const navMenu = document.getElementById('navMenu');
 const menuOverlay = document.getElementById('menuOverlay');
 
 if (hamburgerBtn && navMenu && menuOverlay) {
-    function toggleMenu() {
-        navMenu.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-
+    function syncMenuState() {
+        const isOpen = navMenu.classList.contains('active');
         const icon = hamburgerBtn.querySelector('i');
+
         if (icon) {
-            const isOpen = navMenu.classList.contains('active');
             icon.classList.toggle('fa-bars', !isOpen);
             icon.classList.toggle('fa-xmark', isOpen);
         }
+
+        hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+        document.body.classList.toggle('nav-open', isOpen);
     }
 
+    function closeMenu() {
+        if (!navMenu.classList.contains('active')) {
+            return;
+        }
+
+        navMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        syncMenuState();
+    }
+
+    function toggleMenu() {
+        navMenu.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        syncMenuState();
+    }
+
+    hamburgerBtn.setAttribute('aria-controls', 'navMenu');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
     hamburgerBtn.addEventListener('click', toggleMenu);
-    menuOverlay.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', closeMenu);
 
     // Cerrar menú al hacer click en cualquier link interno
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
-            if (navMenu.classList.contains('active')) {
-                toggleMenu();
-            }
+            closeMenu();
         });
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeMenu();
+        }
+    });
+}
+
+// --- ACCESO RÁPIDO FLOTANTE (TOUCH + TECLADO) ---
+const socialMenu = document.querySelector('.social-floating-menu');
+const socialToggle = socialMenu ? socialMenu.querySelector('.main-planet-btn') : null;
+
+if (socialMenu && socialToggle) {
+    socialToggle.setAttribute('role', 'button');
+    socialToggle.setAttribute('tabindex', '0');
+    socialToggle.setAttribute('aria-label', 'Abrir accesos rápidos');
+    socialToggle.setAttribute('aria-expanded', 'false');
+
+    const toggleSocialMenu = () => {
+        const isOpen = socialMenu.classList.toggle('active');
+        socialToggle.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    socialToggle.addEventListener('click', toggleSocialMenu);
+    socialToggle.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleSocialMenu();
+        }
+    });
+
+    socialMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            socialMenu.classList.remove('active');
+            socialToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    document.addEventListener('click', event => {
+        if (!socialMenu.contains(event.target)) {
+            socialMenu.classList.remove('active');
+            socialToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            socialMenu.classList.remove('active');
+            socialToggle.setAttribute('aria-expanded', 'false');
+        }
     });
 }
 
